@@ -1,7 +1,10 @@
-package Pages;
+package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import java.util.List;
+
 public class MainPage {
     private WebDriver webDriver;
     //Адрес сайта
@@ -13,8 +16,6 @@ public class MainPage {
     private final By lowOrderButton = By.cssSelector(".Button_Button__ra12g.Button_Middle__1CSJM");
     //Вопрос Сколько это стоит? И как оплатить?
     private final By howMuchQuestion = By.id("accordion__heading-0");
-    //Ответ Сколько это стоит? И как оплатить?
-    private final By howMuchAnswer = By.xpath(".//p[contains(text() , 'Сутки — 400 рублей')]");
 
 
     public MainPage(WebDriver webDriver){this.webDriver = webDriver;}
@@ -22,13 +23,28 @@ public class MainPage {
     public void scroll(By scroll){
         ((JavascriptExecutor)webDriver).executeScript("arguments[0].scrollIntoView();", webDriver.findElement(scroll));
     }
-    public void click(By element){webDriver.findElement(element).click();}
-    public By getCookieYes(){return cookieYes;}
     public By getHowMuchQuestion(){return howMuchQuestion;}
-    public By getHowMuchAnswer(){return howMuchAnswer;}
-    public By getTopOrderButton(){
-        return topOrderButton;
+    public void cookieYes(){
+        webDriver.findElement(cookieYes).click();
     }
-    public By getLowOrderButton(){return lowOrderButton;}
+    public void clickTopOrderButton(){
+        webDriver.findElement(topOrderButton).click();
+    }
+    public void clickLowOrderButton(){
+        webDriver.findElement(lowOrderButton).click();
+    }
+    public List<WebElement> getListOfQuestions()  {
+        return webDriver.findElements(By.xpath(".//div[@class = 'accordion__button']"));
+    }
+    public List<WebElement> getListOfAnswers()  {
+        return webDriver.findElements(By.xpath(".//div[@class = 'accordion__panel']/p"));
+    }
+    public void clickQuestion(int ind){
+        getListOfQuestions().get(ind).click();
+    }
+    public String checkAnswerVisible(int i) {
+        return getListOfAnswers().get(i).getText();
+    }
+
 
 }

@@ -1,4 +1,4 @@
-package Pages;
+package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -35,21 +35,27 @@ public class OrderPage {
     private final By yesButton = By.xpath(".//button[text()='Да']");
     //Окно заказ оформлен
     private final By orderDode =By.xpath(".//div[@class='Order_ModalHeader__3FDaJ']");
+    public OrderPage(WebDriver webDriver){this.webDriver = webDriver;}
 
-    public By getName(){return nameField;}
-    public By getSurname(){return surnameField;}
-    public By getPlace(){return placeField;}
-    public By getMetro(){return metroField;}
-    public By getChooseMetro(){return chooseMetroField;}
-    public By getPhone(){return phoneField;}
-    public By getNextButton(){return nextButton;}
-    public By getDateField(){return dateField;}
-    public By getCurrentDate(){return currentDate;}
-    public By getRentTerm(){return rentTerm;}
-    public By getTerm(){return term;}
-    public By getColor(){return color;}
-    public By getOrderButton(){return orderButton;}
-    public  By getYesButton(){return yesButton;}
-    public By getOrderDode(){return orderDode;}
+    public void fillOrderForm(String name, String surname, String place, String phone){
+        webDriver.findElement(nameField).sendKeys(name);
+        webDriver.findElement(surnameField).sendKeys(surname);
+        webDriver.findElement(placeField).sendKeys(place);
+        webDriver.findElement(phoneField).sendKeys(phone);
+        webDriver.findElement(metroField).click();
+        webDriver.findElement(chooseMetroField).click();
+        webDriver.findElement(nextButton).click();
+        webDriver.findElement(dateField).click();
+        webDriver.findElement(currentDate).click();
+        webDriver.findElement(rentTerm).click();
+        webDriver.findElement(term).click();
+        webDriver.findElement(color).click();
+        webDriver.findElement(orderButton).click();
+        webDriver.findElement(yesButton).click();
+    }
+
+    public boolean checkMessageExist() {
+        return !webDriver.findElements(orderDode).isEmpty();
+    }
 
 }

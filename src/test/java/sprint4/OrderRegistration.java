@@ -1,8 +1,9 @@
 package sprint4;
 
-import Pages.MainPage;
-import Pages.OrderPage;
+import pages.MainPage;
+import pages.OrderPage;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,19 +18,19 @@ public class OrderRegistration {
     private WebDriver webDriver;
 
     @Parameterized.Parameter
-    public String name;
+    public String nameField;
     @Parameterized.Parameter(1)
-    public String surname;
+    public String surnameField;
     @Parameterized.Parameter(2)
-    public String place;
+    public String placeField;
     @Parameterized.Parameter(3)
-    public String phone;
+    public String phoneField;
 
     @Parameterized.Parameters
     public static Object[][] data(){
         return new Object[][]{
-            {"Сицилия", "Ли", "Москва", "+79109876543"},
-            {"Патагония", "Фи", "Млсква", "+78964563456"},
+                {"Сицилия", "Ли", "Москва", "+79109876543"},
+                {"Патагония", "Фи", "Млсква", "+78964563456"},
         };
     }
 
@@ -40,61 +41,26 @@ public class OrderRegistration {
     }
 
     @Test
-    public void OrderTopButton(){
+    public void orderTopButton(){
         MainPage mainPage = new MainPage(webDriver);
-        OrderPage orderPage = new OrderPage();
+        OrderPage orderPage = new OrderPage(webDriver);
         mainPage.open();
-        webDriver.findElement(mainPage.getCookieYes()).click();
-        webDriver.findElement(mainPage.getTopOrderButton()).click();
-        webDriver.findElement(orderPage.getName()).sendKeys(name);
-        webDriver.findElement(orderPage.getSurname()).sendKeys(surname);
-        webDriver.findElement(orderPage.getPlace()).sendKeys(place);
-        webDriver.findElement(orderPage.getPhone()).sendKeys(phone);
-        webDriver.findElement(orderPage.getMetro()).click();
-        webDriver.findElement(orderPage.getChooseMetro()).click();
-        webDriver.findElement(orderPage.getNextButton()).click();
-        webDriver.findElement(orderPage.getDateField()).click();
-        webDriver.findElement(orderPage.getCurrentDate()).click();
-        webDriver.findElement(orderPage.getRentTerm()).click();
-        webDriver.findElement(orderPage.getTerm()).click();
-        webDriver.findElement(orderPage.getColor()).click();
-        webDriver.findElement(orderPage.getOrderButton()).click();
-        webDriver.findElement(orderPage.getYesButton());
-        if(webDriver.findElement(orderPage.getOrderDode()).isDisplayed()) {
-            System.out.println("Заказ оформлен");
-        }else {
-            System.out.println("Заказ не оформлен");
-        }
+        mainPage.cookieYes();
+        mainPage.clickTopOrderButton();
+        orderPage.fillOrderForm(nameField, surnameField, placeField, phoneField);
+        Assert.assertTrue("Сообщение заказ оформлен не появилось", orderPage.checkMessageExist());
 
     }
 
     @Test
-    public void OrderLowButton(){
+    public void orderLowButton(){
         MainPage mainPage = new MainPage(webDriver);
-        OrderPage orderPage = new OrderPage();
+        OrderPage orderPage = new OrderPage(webDriver);
         mainPage.open();
-        webDriver.findElement(mainPage.getCookieYes()).click();
-        webDriver.findElement(mainPage.getLowOrderButton()).click();
-        webDriver.findElement(orderPage.getName()).sendKeys(name);
-        webDriver.findElement(orderPage.getSurname()).sendKeys(surname);
-        webDriver.findElement(orderPage.getPlace()).sendKeys(place);
-        webDriver.findElement(orderPage.getPhone()).sendKeys(phone);
-        webDriver.findElement(orderPage.getMetro()).click();
-        webDriver.findElement(orderPage.getChooseMetro()).click();
-        webDriver.findElement(orderPage.getNextButton()).click();
-        //wait.until(ExpectedConditions.elementToBeClickable(By.xpath(".//div[@class='Order_Buttons__1xGrp']//button[text()='Заказать']")));
-        webDriver.findElement(orderPage.getDateField()).click();
-        webDriver.findElement(orderPage.getCurrentDate()).click();
-        webDriver.findElement(orderPage.getRentTerm()).click();
-        webDriver.findElement(orderPage.getTerm()).click();
-        webDriver.findElement(orderPage.getColor()).click();
-        webDriver.findElement(orderPage.getOrderButton()).click();
-        webDriver.findElement(orderPage.getYesButton());
-        if(webDriver.findElement(orderPage.getOrderDode()).isDisplayed()) {
-            System.out.println("Заказ оформлен");
-        }else {
-            System.out.println("Заказ не оформлен");
-        }
+        mainPage.cookieYes();
+        mainPage.clickLowOrderButton();
+        orderPage.fillOrderForm(nameField, surnameField, placeField, phoneField);
+        Assert.assertTrue("Сообщение заказ оформлен не появилось", orderPage.checkMessageExist());
     }
     @After
     public void tearDown(){
