@@ -8,7 +8,7 @@ import java.util.List;
 public class MainPage {
     private WebDriver webDriver;
     //Адрес сайта
-    private final String URL = "https://qa-scooter.praktikum-services.ru/";
+    private final String url = "https://qa-scooter.praktikum-services.ru/";
     private final By cookieYes = By.xpath(".//button[text()='да все привыкли']");
     // верхняя кнопка "Заказать"
     private final By topOrderButton = By.className("Button_Button__ra12g");
@@ -19,7 +19,7 @@ public class MainPage {
 
 
     public MainPage(WebDriver webDriver){this.webDriver = webDriver;}
-    public void open(){webDriver.get(URL);}
+    public void open(){webDriver.get(url);}
     public void scroll(By scroll){
         ((JavascriptExecutor)webDriver).executeScript("arguments[0].scrollIntoView();", webDriver.findElement(scroll));
     }
