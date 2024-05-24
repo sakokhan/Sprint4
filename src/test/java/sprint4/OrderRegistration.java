@@ -1,21 +1,13 @@
 package sprint4;
 
+import org.junit.*;
 import pages.MainPage;
 import pages.OrderPage;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import java.time.Duration;
-import static java.time.temporal.ChronoUnit.SECONDS;
 
 @RunWith(Parameterized.class)
-public class OrderRegistration {
-    private WebDriver webDriver;
+public class OrderRegistration{
 
     @Parameterized.Parameter
     public String nameField;
@@ -34,36 +26,31 @@ public class OrderRegistration {
         };
     }
 
-    @Before
-    public void setup() {
-        webDriver = new ChromeDriver();
-        webDriver.manage().timeouts().implicitlyWait(Duration.of(3, SECONDS));
-    }
-
+    @Rule
+    public CommonAction commonAction = new CommonAction();
     @Test
     public void orderTopButton(){
-        MainPage mainPage = new MainPage(webDriver);
-        OrderPage orderPage = new OrderPage(webDriver);
+        MainPage mainPage = new MainPage(commonAction.getWebDriver());
+        OrderPage orderPage = new OrderPage(commonAction.getWebDriver());
         mainPage.open();
         mainPage.cookieYes();
         mainPage.clickTopOrderButton();
         orderPage.fillOrderForm(nameField, surnameField, placeField, phoneField);
-        Assert.assertTrue("Сообщение заказ оформлен не появилось", orderPage.checkMessageExist());
-
+        String expected = "Заказ оформлен";
+        String actual = orderPage.textOfMessage();
+        Assert.assertEquals("Текст сообщения не соответствует ТЗ", expected, actual);
     }
 
     @Test
     public void orderLowButton(){
-        MainPage mainPage = new MainPage(webDriver);
-        OrderPage orderPage = new OrderPage(webDriver);
+        MainPage mainPage = new MainPage(commonAction.getWebDriver());
+        OrderPage orderPage = new OrderPage(commonAction.getWebDriver());
         mainPage.open();
         mainPage.cookieYes();
         mainPage.clickLowOrderButton();
         orderPage.fillOrderForm(nameField, surnameField, placeField, phoneField);
-        Assert.assertTrue("Сообщение заказ оформлен не появилось", orderPage.checkMessageExist());
-    }
-    @After
-    public void tearDown(){
-        webDriver.quit();
+        String expected = "Заказ оформлен";
+        String actual = orderPage.textOfMessage();
+        Assert.assertEquals("Текст сообщения не соответствует ТЗ", expected, actual);
     }
 }

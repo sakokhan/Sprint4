@@ -32,7 +32,7 @@ public class OrderPage {
     //Кнопка Заказать
     private final By orderButton = By.xpath(".//div[@class='Order_Buttons__1xGrp']//button[text()='Заказать']");
     //Кнопка подтверждения заказа
-    private final By yesButton = By.xpath(".//button[text()='Да']");
+    private final By yesButton = By.xpath(".//div[@class='Order_Buttons__1xGrp']//button[text()='Да']");
     //Окно заказ оформлен
     private final By orderDode =By.xpath(".//div[@class='Order_ModalHeader__3FDaJ']");
     public OrderPage(WebDriver webDriver){this.webDriver = webDriver;}
@@ -53,9 +53,8 @@ public class OrderPage {
         webDriver.findElement(orderButton).click();
         webDriver.findElement(yesButton).click();
     }
-
-    public boolean checkMessageExist() {
-        return !webDriver.findElements(orderDode).isEmpty();
+    public String textOfMessage(){
+        return webDriver.findElement(orderDode).getText();
     }
 
 }

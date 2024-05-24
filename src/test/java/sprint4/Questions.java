@@ -1,20 +1,12 @@
 package sprint4;
 
+import org.junit.*;
 import pages.MainPage;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import java.time.Duration;
-import static java.time.temporal.ChronoUnit.SECONDS;
 
 @RunWith(Parameterized.class)
-public class Questions {
-    private WebDriver webDriver;
+public class Questions extends CommonAction {
 
     @Parameterized.Parameter
     public int index;
@@ -34,17 +26,13 @@ public class Questions {
                 {6, "Да, пока самокат не привезли. Штрафа не будет, объяснительной записки тоже не попросим. Все же свои.", 6},
                 {7, "Да, обязательно. Всем самокатов! И Москве, и Московской области.", 7},
         };
-
     }
 
-    @Before
-    public void setup() {
-        webDriver = new ChromeDriver();
-        webDriver.manage().timeouts().implicitlyWait(Duration.of(3, SECONDS));
-    }
+    @Rule
+    public CommonAction commonAction = new CommonAction();
     @Test
     public void testQuestionSection(){
-        MainPage mainPage = new MainPage(webDriver);
+        MainPage mainPage = new MainPage(commonAction.getWebDriver());
         mainPage.open();
         mainPage.scroll(mainPage.getHowMuchQuestion());
         mainPage.getListOfQuestions();
@@ -54,8 +42,5 @@ public class Questions {
         Assert.assertEquals("Текст ответа не совпадает", expected, actual);
 
     }
-    @After
-    public void tearDown(){
-        webDriver.quit();
-    }
+
 }
