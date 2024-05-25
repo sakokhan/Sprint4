@@ -27,7 +27,8 @@ public class OrderRegistration{
     }
 
     @Rule
-    public CommonAction commonAction = new CommonAction();
+    public CommonActions commonAction = new CommonActions();
+
     @Test
     public void orderTopButton(){
         MainPage mainPage = new MainPage(commonAction.getWebDriver());
@@ -36,9 +37,9 @@ public class OrderRegistration{
         mainPage.cookieYes();
         mainPage.clickTopOrderButton();
         orderPage.fillOrderForm(nameField, surnameField, placeField, phoneField);
-        String expected = "Заказ оформлен";
+        String expected = "Посмотреть статус";
         String actual = orderPage.textOfMessage();
-        Assert.assertEquals("Текст сообщения не соответствует ТЗ", expected, actual);
+        Assert.assertEquals("Кнопка посмотреть статус заказа не появилась", expected, actual);
     }
 
     @Test
@@ -49,8 +50,8 @@ public class OrderRegistration{
         mainPage.cookieYes();
         mainPage.clickLowOrderButton();
         orderPage.fillOrderForm(nameField, surnameField, placeField, phoneField);
-        String expected = "Заказ оформлен";
+        String expected = "Посмотреть статус";
         String actual = orderPage.textOfMessage();
-        Assert.assertEquals("Текст сообщения не соответствует ТЗ", expected, actual);
+        Assert.assertEquals("Кнопка посмотреть статус заказа не появилась", expected, actual);
     }
 }

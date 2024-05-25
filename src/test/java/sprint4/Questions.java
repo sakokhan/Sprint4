@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 @RunWith(Parameterized.class)
-public class Questions extends CommonAction {
+public class Questions extends CommonActions {
 
     @Parameterized.Parameter
     public int index;
@@ -29,7 +29,7 @@ public class Questions extends CommonAction {
     }
 
     @Rule
-    public CommonAction commonAction = new CommonAction();
+    public CommonActions commonAction = new CommonActions();
     @Test
     public void testQuestionSection(){
         MainPage mainPage = new MainPage(commonAction.getWebDriver());

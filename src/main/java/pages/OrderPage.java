@@ -34,7 +34,7 @@ public class OrderPage {
     //Кнопка подтверждения заказа
     private final By yesButton = By.xpath(".//div[@class='Order_Buttons__1xGrp']//button[text()='Да']");
     //Окно заказ оформлен
-    private final By orderDode =By.xpath(".//div[@class='Order_ModalHeader__3FDaJ']");
+    private final By orderDode =By.xpath(".//div[@class='Order_NextButton__1_rCA']/button");
     public OrderPage(WebDriver webDriver){this.webDriver = webDriver;}
 
     public void fillOrderForm(String name, String surname, String place, String phone){
